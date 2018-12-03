@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Vortex
+  - Wall
   layers:
   - Default
   - TransparentFX

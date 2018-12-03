@@ -56,11 +56,11 @@ public class OrbitSystem : MonoBehaviour
 
         //this.velocity = this.radius * this.angularMotion;
 
-        //this.acceleration = (this.velocity * this.velocity) / this.radius;
+        this.acceleration = (this.velocity * this.velocity) / this.radius;
         //this.acceleration = (this.satellite.Mass * (this.velocity * this.velocity)) / this.radius;
 
-        //this.attraction = (this.planet.transform.position - this.satellite.transform.position).normalized * this.acceleration;
-        //this.direction = Calculus.PerpendicularVector2(this.attraction.normalized, Side.Right).normalized * this.velocity;
+        this.attraction = (this.planet.transform.position - this.satellite.transform.position).normalized * this.acceleration;
+        this.direction = Calculus.PerpendicularVector2(this.attraction.normalized, Side.Right).normalized * this.velocity;
 
         //this.orbitalVelocity = (float)(Math.Sqrt((this.planet.Gravity * (this.planet.Mass + this.satellite.Mass)) / (this.distance * this.distanceMultiplicator)));
         //this.centripetalAcceleration = (this.orbitalVelocity * this.orbitalVelocity) / (this.distance * this.distanceMultiplicator);
@@ -71,7 +71,9 @@ public class OrbitSystem : MonoBehaviour
 
     private void FixedUpdate()
     {
-        this.satellite.Rigidbody.velocity = this.direction + this.attraction;
+        this.satellite.Rigidbody.velocity = this.direction;
+        this.satellite.Rigidbody.AddForce(this.attraction, ForceMode2D.Force);
+        //this.satellite.Rigidbody.velocity = this.direction + this.attraction;
     }
 
     private void OnDrawGizmosSelected()

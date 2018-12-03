@@ -15,20 +15,22 @@ public static class Calculus
     /// <param name="b">The end point of the line.</param>
     /// <param name="point">The point to check side of.</param>
     /// <returns></returns>
-    public static int PointSideRelativeToALine(Vector3 a, Vector3 b, Vector3 point)
+    public static float PointSideRelativeToALine(Vector3 a, Vector3 b, Vector3 point)
     {
-        int result = 0;
+        //int result = 0;
+        
+        float determinant = ((b.x - a.x) * (point.y - a.y)) - ((point.x - a.x) * (b.y - a.y));
 
-        float determinant = ((point.x - a.x) * (b.y - a.y)) - ((point.y - b.y) * (b.x - a.x));
+        //Debug.Log("Determinant : " + determinant);
 
-        if (determinant > 0)
-            result = 1;
-        else if (determinant < 0)
-            result = -1;
-        else
-            result = 0;
+        //if (determinant > 0)
+        //    result = 1;
+        //else if (determinant < 0)
+        //    result = -1;
+        //else
+        //    result = 0;
 
-        return result;
+        return determinant;
     }
 
     /// <summary>

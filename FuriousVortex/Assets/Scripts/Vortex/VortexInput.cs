@@ -10,6 +10,8 @@ public class VortexInput : MonoBehaviour
     private VortexController controller = null;
     [SerializeField]
     private Camera mainCamera = null;
+    [SerializeField]
+    private CustomCamera customCam = null;
 	#endregion
 
 	#region Methods
@@ -26,6 +28,8 @@ public class VortexInput : MonoBehaviour
             Debug.LogError("[Missing Reference] - controller is missing !");
         if (this.mainCamera == null)
             Debug.LogError("[Missing Reference] - mainCamera is missing !");
+        if (this.customCam == null)
+            Debug.LogError("[Missing Reference] - customCam is missing !");
 #endif
     }
 	#endregion
@@ -41,11 +45,14 @@ public class VortexInput : MonoBehaviour
 
             this.controller.ActivateVortex();
 
+            this.customCam.LockCam();
+
         }
         else if (Input.GetMouseButtonUp(0))
         {
             this.controller.DeactivateVortex();
-        }  
+            this.customCam.UnlockCam();
+        }
 #else
         if(Input.touchCount > 0)
         {
@@ -53,15 +60,21 @@ public class VortexInput : MonoBehaviour
 
             if(touch.phase == TouchPhase.Began)
             {
+                Vector3 vortexPos = this.mainCamera.ScreenToWorldPoint(touch.position);
+                vortexPos.z = 0.0f;
+                this.controller.UpdateVortexPosition(vortexPos);
+
                 this.controller.ActivateVortex();
-                this.controller.UpdateVortexPosition(this.mainCamera.ScreenToWorldPoint(touch.position));
+
+                this.customCam.LockCam();
             }
             else if(touch.phase == TouchPhase.Ended)
             {
                 this.controller.DeactivateVortex();
+                this.customCam.UnlockCam();
             }
         }
 #endif
     }
-#endregion
+    #endregion
 }

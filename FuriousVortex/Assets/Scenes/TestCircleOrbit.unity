@@ -220,7 +220,7 @@ MonoBehaviour:
   radius: 10
   angularMotion: 0.5
   period: 10
-  velocity: 0
+  velocity: 50
   acceleration: 0
   timeScale: 1
   stdGravParam: 0
